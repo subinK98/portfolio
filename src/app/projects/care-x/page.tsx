@@ -15,6 +15,9 @@ import {
   CareXFlow,
   AIDevJourney,
 } from "@/components/project/care-x-diagrams";
+import { TeamDiagram } from "@/components/diagrams/team-diagram";
+import { RoleDonut } from "@/components/diagrams/role-donut";
+import { GanttCompare } from "@/components/diagrams/gantt-compare";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "care-x";
@@ -104,29 +107,29 @@ export default function CareXPage() {
 
         <Section id="role" number="04" title="My Role — 최소 팀에서 4개 서비스를">
           <p>
-            <strong>기획 1(본인) · 개발 2 · 디자인 1</strong>. 4개 서비스 전체
-            기획을 단독 담당했고, 어드민 2종은 디자인과 프론트엔드 구현까지
-            수행했습니다.
+            4명 팀에서 기획 파트를 <strong>단독으로 담당</strong>했고, 어드민
+            2종은 디자인과 프론트까지 이어갔습니다.
           </p>
 
-          <Callout label="Contribution Breakdown">
-            <ul className="space-y-2 text-sm">
-              <li>
-                <strong>기획:</strong> 4개 서비스 전체 (앱 · 키오스크 · 점주 ·
-                관리자)
-              </li>
-              <li>
-                <strong>디자인:</strong> 점주 어드민, 관리자 어드민 시안 (Figma)
-              </li>
-              <li>
-                <strong>프론트엔드:</strong> 점주·관리자 어드민의 API 연동 제외
-                프론트 전체 (Nuxt/Vue)
-              </li>
-              <li>
-                <strong>QA:</strong> 테스트 케이스 작성 · 실행 · 이슈 트래킹
-              </li>
-            </ul>
-          </Callout>
+          <TeamDiagram
+            members={[
+              { role: "기획 · PM", count: 1, self: true },
+              { role: "개발", count: 2 },
+              { role: "디자인", count: 1 },
+            ]}
+            caption="Team of 4 · 기획 1인이 4개 서비스를 커버"
+          />
+
+          <RoleDonut
+            centerLabel="Contribution"
+            centerValue="100%"
+            slices={[
+              { label: "서비스 기획", value: 40, color: "oklch(0.72 0.19 155)" },
+              { label: "UI 디자인 (어드민 2종)", value: 20, color: "oklch(0.72 0.19 155 / 0.7)" },
+              { label: "프론트엔드 (어드민 2종)", value: 30, color: "oklch(0.72 0.19 155 / 0.45)" },
+              { label: "QA · 테스트", value: 10, color: "oklch(0.72 0.19 155 / 0.25)" },
+            ]}
+          />
         </Section>
 
         <Section id="ai-dev" number="05" title="AI-Augmented Dev — 실패에서 학습으로">
@@ -158,11 +161,31 @@ export default function CareXPage() {
         </Section>
 
         <Section id="impact" number="06" title="Impact">
+          <GanttCompare
+            unit="개월"
+            maxUnits={3}
+            highlight="1개월 단축 · 리드타임 33% 감소"
+            bars={[
+              {
+                label: "당초 계획",
+                sublabel: "개발자 견적",
+                units: 3,
+                color: "muted",
+              },
+              {
+                label: "실제 완료",
+                sublabel: "AI 활용 후",
+                units: 2,
+                color: "brand",
+              },
+            ]}
+          />
+
           <MetricGrid
             items={[
-              { value: "33%", label: "개발 리드타임 단축", sub: "3개월 → 2개월" },
               { value: "3주", label: "4개 서비스 화면 확정", sub: "기획→확정" },
-              { value: "90%", label: "QA 해결률", sub: "103건 발견" },
+              { value: "103건", label: "QA 이슈 발견", sub: "오픈 전 검증" },
+              { value: "90%", label: "QA 해결률", sub: "오픈 전" },
             ]}
           />
           <p className="text-sm text-muted-foreground">

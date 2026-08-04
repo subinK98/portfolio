@@ -8,6 +8,11 @@ import {
   Callout,
   NextProject,
 } from "@/components/project/case-study";
+import {
+  ComparisonMatrix,
+  type MatrixRow,
+} from "@/components/diagrams/comparison-matrix";
+import { BabyMonitorSystemFlow } from "@/components/diagrams/system-flow";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "baby-monitor";
@@ -55,57 +60,55 @@ export default function Page() {
           />
         </Section>
 
-        <Section id="problem" number="02" title="Problem">
+        <Section id="problem" number="02" title="Problem — 시장의 갭">
           <p>
-            코로나로 인한 영유아 사망·질식사 뉴스를 접하며 시작. 부모가 하루 종일
-            아이 곁에 있을 수 없는 현실에서{" "}
+            부모가 하루 종일 아이 곁에 있을 수 없는 현실에서{" "}
             <strong>떨어져 있어도 상태를 실시간 확인할 수 있는 장치</strong>가
-            필요하다는 문제 정의로 출발했습니다.
+            필요했지만, 기존 시장에는 통합 제품이 없었습니다.
           </p>
-          <p>
-            기존 제품(NEBOO · SPROUTLING · OWLET 등) 벤치마킹 결과{" "}
-            <strong>생체정보 · 위험감지 · 원격 제어가 통합된 제품은
-            없었습니다.</strong>
-          </p>
+
+          <ComparisonMatrix
+            columns={["생체정보", "위험감지", "원격제어"]}
+            rows={
+              [
+                {
+                  label: "NEBOO",
+                  cells: ["full", "partial", "none"],
+                },
+                {
+                  label: "SPROUTLING",
+                  cells: ["full", "full", "none"],
+                },
+                {
+                  label: "아이몬밴드",
+                  cells: ["full", "full", "none"],
+                },
+                {
+                  label: "OWLET",
+                  cells: ["full", "full", "partial"],
+                },
+                {
+                  label: "아이앤나",
+                  cells: ["none", "full", "full"],
+                },
+                {
+                  label: "Our Product",
+                  cells: ["full", "full", "full"],
+                  highlight: true,
+                },
+              ] as MatrixRow[]
+            }
+            caption="● 완전 지원 · ○ 부분 지원 · × 미지원"
+          />
         </Section>
 
-        <Section id="solution" number="03" title="Solution — 3-Part 아키텍처">
-          <div className="not-prose my-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              {
-                type: "Sensing",
-                title: "발목 밴드",
-                desc: "심박수 · 체온 · 산소포화도 · 뒤집힘 감지",
-                icon: "⌚",
-              },
-              {
-                type: "Actuation",
-                title: "스마트 모빌",
-                desc: "울음 감지 시 자동 회전 · 카메라 스트리밍",
-                icon: "🎵",
-              },
-              {
-                type: "Interface",
-                title: "웹 대시보드",
-                desc: "React · 실시간 시각화 · 위험 알림",
-                icon: "🖥️",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-border bg-card p-6"
-              >
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--brand)] mb-1">
-                  {item.type}
-                </div>
-                <div className="font-medium mb-2">{item.title}</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+        <Section id="solution" number="03" title="Solution — 통합 시스템">
+          <p>
+            하드웨어(밴드) · 딥러닝(울음 분석) · 웹 UI를 하나의 시스템으로
+            통합했습니다.
+          </p>
+
+          <BabyMonitorSystemFlow />
         </Section>
 
         <Section id="role" number="04" title="My Role — 기획 + 개발 + 팀 리딩">

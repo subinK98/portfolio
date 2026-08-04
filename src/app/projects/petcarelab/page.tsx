@@ -9,6 +9,7 @@ import {
   BeforeAfter,
   NextProject,
 } from "@/components/project/case-study";
+import { IATree } from "@/components/diagrams/ia-tree";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "petcarelab";
@@ -97,36 +98,53 @@ export default function Page() {
           />
         </Section>
 
-        <Section id="prototype" number="04" title="Prototype — 5개 핵심 화면">
-          <p>Figma로 다음 5개 핵심 화면을 재설계하고 클릭 가능한 프로토타입 완성.</p>
+        <Section id="prototype" number="04" title="Prototype — IA 재구성">
+          <p>
+            홈 화면을 <strong>건강 상태 요약</strong> 중심으로 재구성하고, 소변검사
+            등 핵심 기능을 상위 계층으로 승격했습니다.
+          </p>
 
-          <div className="not-prose my-6 grid grid-cols-2 md:grid-cols-5 gap-3">
-            {[
-              { name: "홈", accent: true },
-              { name: "건강일기", accent: false },
-              { name: "소변검사", accent: true },
-              { name: "검사 히스토리", accent: false },
-              { name: "마이페이지", accent: false },
-            ].map((item, i) => (
-              <div
-                key={item.name}
-                className={`rounded-xl border p-4 text-center transition-colors ${
-                  item.accent
-                    ? "border-[var(--brand)]/30 bg-[var(--brand)]/[0.05]"
-                    : "border-border bg-card"
-                }`}
-              >
-                <div className="font-mono text-[10px] text-muted-foreground mb-1">
-                  0{i + 1}
-                </div>
-                <div className="text-sm font-medium">{item.name}</div>
-              </div>
-            ))}
-          </div>
+          <IATree
+            root={{
+              label: "홈 (건강 요약)",
+              icon: "🏠",
+              accent: true,
+              children: [
+                {
+                  label: "건강일기",
+                  icon: "📝",
+                  children: [
+                    { label: "식사 · 산책" },
+                    { label: "이상 증상" },
+                  ],
+                },
+                {
+                  label: "소변검사",
+                  icon: "🧪",
+                  accent: true,
+                  children: [
+                    { label: "검사하기" },
+                    { label: "히스토리" },
+                    { label: "통계 그래프" },
+                  ],
+                },
+                {
+                  label: "챌린지",
+                  icon: "🏆",
+                },
+                {
+                  label: "마이페이지",
+                  icon: "👤",
+                  children: [{ label: "반려견 정보" }, { label: "기기 등록" }],
+                },
+              ],
+            }}
+            caption="4개 메인 탭 · 소변검사를 상위 계층으로 승격"
+          />
 
           <p className="text-sm text-muted-foreground">
-            이 과정에서 <strong>Figma 협업 프로세스를 팀에 도입</strong>해 기존 PPT
-            기반 화면 공유의 버전 혼선을 해소하고 피드백 속도를 개선했습니다.
+            추가로 <strong>Figma 협업 프로세스를 팀에 도입</strong>해 PPT 기반
+            화면 공유의 버전 혼선을 해소하고 피드백 속도를 개선했습니다.
           </p>
         </Section>
 

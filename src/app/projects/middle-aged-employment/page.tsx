@@ -9,6 +9,8 @@ import {
   BeforeAfter,
   NextProject,
 } from "@/components/project/case-study";
+import { TeamDiagram } from "@/components/diagrams/team-diagram";
+import { ChannelFlowCompare } from "@/components/diagrams/channel-flow";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "middle-aged-employment";
@@ -54,32 +56,18 @@ export default function Page() {
         </Section>
 
         <Section id="context" number="02" title="Team & Context">
-          <Callout>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                  Team
-                </div>
-                <div>PM 1 · 개발 4 · 기획 1(본인) · 디자인 1</div>
-              </div>
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                  Client
-                </div>
-                <div>노사발전재단</div>
-              </div>
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                  My Position
-                </div>
-                <div>기획 파트 · 주니어 단독</div>
-              </div>
-            </div>
-          </Callout>
-          <p>
-            <strong>기획 파트는 시니어 사수 없이 주니어 단독</strong>으로
-            담당했습니다. 어디에 리소스를 먼저 투입할지, 어떤 원칙으로 산출물을
-            만들지 스스로 결정해야 하는 환경이었습니다.
+          <TeamDiagram
+            lead={{ role: "PM", count: 1 }}
+            members={[
+              { role: "개발", count: 4 },
+              { role: "기획", count: 1, self: true },
+              { role: "디자인", count: 1 },
+            ]}
+            caption="총 7명 · 기획 파트는 시니어 사수 없이 주니어 단독"
+          />
+          <p className="text-sm text-muted-foreground">
+            어디에 리소스를 먼저 투입할지, 어떤 원칙으로 산출물을 만들지 스스로
+            결정해야 하는 환경이었습니다.
           </p>
         </Section>
 
@@ -140,26 +128,15 @@ export default function Page() {
             필요했습니다.
           </p>
 
-          <BeforeAfter
-            before={{
-              title: "분산된 소통 · 반복된 리뷰",
-              items: [
-                "구두 · 메신저 · 메일로 흩어진 요청",
-                "PM · 개발자 각기 다른 창구",
-                "화면기획서 리뷰마다 수정 요청 10건+",
-                "산출물 재작성 요청 반복",
-              ],
-            }}
-            after={{
-              title: "단일 채널 · 표준화된 산출물",
-              items: [
-                "기획자 이메일·번호로 사업 관계자 소통 일원화",
-                "WBS · 회의록 · 요구사항 확인서 템플릿 제작",
-                "리뷰 이슈 마지막에는 1건으로 감소",
-                "검수 포인트 표준화로 재작성 감소",
-              ],
-            }}
-          />
+          <ChannelFlowCompare />
+
+          <Callout label="추가 개선">
+            <ul className="space-y-1.5 text-sm">
+              <li>· WBS · 회의록 · 요구사항 확인서 등 <strong>표준 템플릿 4종 제작</strong></li>
+              <li>· 검수 포인트 표준화로 <strong>재작성 요청 감소</strong></li>
+              <li>· 화면기획서 리뷰 이슈 <strong>10건 → 1건 (프로젝트 후반)</strong></li>
+            </ul>
+          </Callout>
         </Section>
 
         <Section id="outcome" number="06" title="Outcome">

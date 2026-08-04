@@ -206,23 +206,32 @@ function SkillTag({
   skill: Skill;
   featured?: boolean;
 }) {
-  const isCore = skill.level === "core";
+  const level = skill.level ?? "familiar";
+  const filled = level === "core" ? 3 : level === "proficient" ? 2 : 1;
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors ${
+      className={`inline-flex items-center gap-2 px-2.5 py-1.5 text-xs rounded-md border transition-all hover:border-foreground/40 ${
         featured
-          ? isCore
-            ? "bg-[var(--brand)]/15 text-foreground border border-[var(--brand)]/30"
-            : "bg-background border border-[var(--brand)]/15 text-foreground/80"
-          : isCore
-            ? "bg-foreground text-background"
-            : "bg-secondary text-secondary-foreground"
+          ? "border-[var(--brand)]/20 bg-background/60"
+          : "border-border bg-background"
       }`}
     >
-      {isCore && featured && (
-        <span className="w-1 h-1 rounded-full bg-[var(--brand)]" />
-      )}
-      {skill.name}
+      <span className="text-foreground/90">{skill.name}</span>
+      <span className="flex items-center gap-0.5" aria-label={`proficiency: ${level}`}>
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={`w-1 h-1 rounded-full transition-colors ${
+              i < filled
+                ? featured
+                  ? "bg-[var(--brand)]"
+                  : "bg-foreground"
+                : "bg-border"
+            }`}
+          />
+        ))}
+      </span>
     </span>
   );
 }
