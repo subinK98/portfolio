@@ -1,53 +1,96 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Marquee } from "@/components/interaction/marquee";
+
+type Skill = {
+  name: string;
+  level?: "core" | "proficient" | "familiar";
+};
 
 type SkillGroup = {
+  id: string;
   category: string;
-  items: string[];
-  accent?: boolean;
+  hint: string;
+  icon: string;
+  featured?: boolean;
+  items: Skill[];
 };
 
 const skillGroups: SkillGroup[] = [
   {
-    category: "Planning & Design",
-    items: [
-      "서비스 기획",
-      "화면기획서 (WBS)",
-      "IA 설계",
-      "사용자 리서치",
-      "Figma",
-      "와이어프레임",
-      "프로토타이핑",
-    ],
-  },
-  {
+    id: "ai",
     category: "AI-Assisted Development",
-    accent: true,
+    hint: "AI로 실행력 확장",
+    icon: "◆",
+    featured: true,
     items: [
-      "Claude Code",
-      "프롬프트 세분화",
-      "레포 학습 기반 구현",
-      "Nuxt (Vue)",
-      "Next.js (React)",
-      "MVP 구현",
+      { name: "Claude Code", level: "core" },
+      { name: "프롬프트 세분화", level: "core" },
+      { name: "레포 학습 세팅", level: "core" },
+      { name: "Nuxt (Vue)", level: "proficient" },
+      { name: "Next.js (React)", level: "proficient" },
+      { name: "MVP 구현", level: "core" },
     ],
   },
   {
+    id: "planning",
+    category: "Planning & Design",
+    hint: "기획의 뼈대",
+    icon: "◈",
+    items: [
+      { name: "서비스 기획", level: "core" },
+      { name: "화면기획서", level: "core" },
+      { name: "IA 설계", level: "core" },
+      { name: "사용자 리서치", level: "proficient" },
+      { name: "Figma", level: "core" },
+      { name: "와이어프레임", level: "core" },
+      { name: "프로토타이핑", level: "proficient" },
+    ],
+  },
+  {
+    id: "dev",
     category: "Development Basics",
-    items: ["HTML", "CSS", "JavaScript", "React", "Vue", "Git"],
-  },
-  {
-    category: "Collaboration",
+    hint: "직접 만들 수 있는 것들",
+    icon: "◇",
     items: [
-      "Notion",
-      "Slack",
-      "Redmine",
-      "산출물 표준화",
-      "이해관계자 커뮤니케이션",
-      "QA 테스트 케이스",
+      { name: "HTML/CSS" },
+      { name: "JavaScript" },
+      { name: "TypeScript" },
+      { name: "React" },
+      { name: "Vue" },
+      { name: "Git" },
     ],
   },
+  {
+    id: "collab",
+    category: "Collaboration",
+    hint: "협업과 커뮤니케이션",
+    icon: "◉",
+    items: [
+      { name: "Notion" },
+      { name: "Slack" },
+      { name: "Redmine" },
+      { name: "산출물 표준화" },
+      { name: "이해관계자 커뮤니케이션" },
+      { name: "QA 테스트 케이스" },
+    ],
+  },
+];
+
+const MARQUEE_TAGS = [
+  "Claude Code",
+  "Figma",
+  "Nuxt.js",
+  "Next.js",
+  "React",
+  "Vue",
+  "Notion",
+  "TypeScript",
+  "Public SI",
+  "O2O",
+  "Service Planning",
+  "Prompt Engineering",
 ];
 
 const fadeUp = {
@@ -58,60 +101,128 @@ const fadeUp = {
 
 export function Skills() {
   return (
-    <section id="skills" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <section id="skills" className="relative py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <motion.div
+          {...fadeUp}
+          transition={{ duration: 0.5 }}
+          className="mb-12 flex items-end justify-between gap-4"
+        >
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              / 03 · Toolkit
+            </span>
+            <h2 className="mt-3 text-3xl md:text-5xl font-medium tracking-tight leading-tight text-balance">
+              도구는 많이 안 씁니다.
+              <br />
+              <span className="text-muted-foreground">
+                필요한 것만 깊게.
+              </span>
+            </h2>
+          </div>
+        </motion.div>
+
+        {/* Bento grid: featured card is 2-col wide */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {skillGroups.map((group, i) => (
+            <motion.div
+              key={group.id}
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className={`group relative overflow-hidden rounded-2xl border transition-all hover:-translate-y-0.5 ${
+                group.featured
+                  ? "md:col-span-2 lg:row-span-2 border-[var(--brand)]/30 bg-[var(--brand)]/[0.03]"
+                  : "border-border bg-card hover:border-foreground/30"
+              }`}
+            >
+              {group.featured && (
+                <div className="absolute top-4 right-4 flex items-center gap-1.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--brand)]" />
+                  </span>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-[var(--brand)]">
+                    Primary
+                  </span>
+                </div>
+              )}
+
+              <div className="p-6 md:p-8 h-full flex flex-col">
+                <div className="mb-6">
+                  <div
+                    className={`text-2xl mb-3 ${group.featured ? "text-[var(--brand)]" : "text-muted-foreground/60"}`}
+                  >
+                    {group.icon}
+                  </div>
+                  <h3
+                    className={`font-medium tracking-tight ${
+                      group.featured ? "text-xl md:text-2xl" : "text-base"
+                    }`}
+                  >
+                    {group.category}
+                  </h3>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {group.hint}
+                  </p>
+                </div>
+
+                <div className="mt-auto flex flex-wrap gap-1.5">
+                  {group.items.map((skill) => (
+                    <SkillTag key={skill.name} skill={skill} featured={group.featured} />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom marquee for atmosphere */}
       <motion.div
         {...fadeUp}
-        transition={{ duration: 0.5 }}
-        className="mb-10 flex items-baseline gap-4"
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-16 py-4 border-y border-border/40 bg-secondary/20"
       >
-        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          / 03
-        </span>
-        <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground">
-          Skills
-        </h2>
+        <Marquee speed={45} className="mask-fade-lr">
+          {MARQUEE_TAGS.map((tag, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-6 px-3 font-mono text-xs uppercase tracking-widest text-muted-foreground/60"
+            >
+              <span>{tag}</span>
+              <span className="text-[var(--brand)]/40">·</span>
+            </div>
+          ))}
+        </Marquee>
       </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {skillGroups.map((group, i) => (
-          <motion.div
-            key={group.category}
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: i * 0.06 }}
-            className={`rounded-2xl border p-6 md:p-8 ${
-              group.accent
-                ? "border-[var(--brand)]/30 bg-[var(--brand)]/[0.03]"
-                : "border-border bg-card"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-5">
-              {group.accent && (
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--brand)]" />
-                </span>
-              )}
-              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                {group.category}
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span
-                  key={item}
-                  className={`px-3 py-1.5 text-sm rounded-lg ${
-                    group.accent
-                      ? "bg-background border border-[var(--brand)]/20"
-                      : "bg-secondary text-secondary-foreground"
-                  }`}
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
     </section>
+  );
+}
+
+function SkillTag({
+  skill,
+  featured,
+}: {
+  skill: Skill;
+  featured?: boolean;
+}) {
+  const isCore = skill.level === "core";
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md transition-colors ${
+        featured
+          ? isCore
+            ? "bg-[var(--brand)]/15 text-foreground border border-[var(--brand)]/30"
+            : "bg-background border border-[var(--brand)]/15 text-foreground/80"
+          : isCore
+            ? "bg-foreground text-background"
+            : "bg-secondary text-secondary-foreground"
+      }`}
+    >
+      {isCore && featured && (
+        <span className="w-1 h-1 rounded-full bg-[var(--brand)]" />
+      )}
+      {skill.name}
+    </span>
   );
 }

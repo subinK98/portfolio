@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ScrollProgress } from "@/components/interaction/scroll-progress";
 import { siteConfig } from "@/lib/site";
 
 const geistSans = Geist({
@@ -63,6 +64,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ScrollProgress />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

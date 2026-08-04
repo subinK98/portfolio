@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { allProjects, type Project } from "@/lib/projects";
+import { ProjectCover } from "@/components/project/project-cover";
+import { Counter } from "@/components/interaction/counter";
 
 const statusLabel: Record<Project["status"], string> = {
   shipped: "Shipped",
@@ -11,151 +13,166 @@ const statusLabel: Record<Project["status"], string> = {
   student: "Team Project",
 };
 
-const statusColor: Record<Project["status"], string> = {
-  shipped: "bg-[var(--brand)]/20 text-[var(--brand)] border-[var(--brand)]/30",
-  "mvp-complete":
-    "bg-[var(--brand)]/20 text-[var(--brand)] border-[var(--brand)]/30",
-  "not-launched": "bg-muted text-muted-foreground border-border",
-  student: "bg-muted text-muted-foreground border-border",
-};
-
 export function Work() {
   const projects = allProjects();
   const [featured, ...rest] = projects;
 
   return (
-    <section id="work" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <section id="work" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5 }}
-        className="mb-10 flex items-baseline gap-4"
+        className="mb-12 flex items-end justify-between gap-4"
       >
-        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          / 02
-        </span>
-        <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground">
-          Selected Work
-        </h2>
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            / 02 · Selected Work
+          </span>
+          <h2 className="mt-3 text-3xl md:text-5xl font-medium tracking-tight leading-tight text-balance">
+            리소스가 부족할수록,
+            <br />
+            <span className="text-muted-foreground">
+              실행력이 결과를 만든다.
+            </span>
+          </h2>
+        </div>
       </motion.div>
 
-      {/* Featured project - large hero card */}
+      {/* Featured project - hero card */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
-        className="mb-4"
+        className="mb-5"
       >
-        <ProjectCard project={featured} featured />
+        <FeaturedCard project={featured} />
       </motion.div>
 
       {/* Rest of projects */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {rest.map((project, i) => (
           <motion.div
             key={project.slug}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
           >
-            <ProjectCard project={project} />
+            <SmallCard project={project} />
           </motion.div>
         ))}
       </div>
     </section>
   );
+}
 
-  function ProjectCard({
-    project,
-    featured = false,
-  }: {
-    project: Project;
-    featured?: boolean;
-  }) {
-    return (
-      <Link
-        href={`/projects/${project.slug}`}
-        className={`group relative block overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-foreground/30 ${
-          featured ? "p-8 md:p-12" : "p-6 md:p-8"
-        }`}
-      >
-        {/* Top row: period, status */}
-        <div className="mb-6 flex items-center justify-between">
-          <span className="font-mono text-xs text-muted-foreground">
-            {project.period}
-          </span>
-          <span
-            className={`px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border ${statusColor[project.status]}`}
-          >
+function FeaturedCard({ project }: { project: Project }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group relative block overflow-hidden rounded-3xl border border-border bg-card transition-all hover:border-foreground/30 hover:shadow-2xl hover:shadow-[var(--brand)]/5"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
+        {/* Cover area */}
+        <div className="lg:col-span-3 relative h-64 lg:h-auto lg:min-h-[440px]">
+          <ProjectCover slug={project.slug} className="absolute inset-0" />
+        </div>
+
+        {/* Content */}
+        <div className="lg:col-span-2 p-8 md:p-10 flex flex-col justify-between gap-8">
+          <div>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full bg-[var(--brand)] text-background">
+                Featured
+              </span>
+              <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border border-border text-muted-foreground">
+                {statusLabel[project.status]}
+              </span>
+            </div>
+            <h3 className="text-4xl md:text-5xl font-medium tracking-tight leading-none mb-3">
+              {project.title}
+            </h3>
+            <p className="text-lg text-muted-foreground">{project.subtitle}</p>
+
+            <p className="mt-6 text-sm text-foreground/80 leading-relaxed text-pretty">
+              {project.tagline}
+            </p>
+          </div>
+
+          <div>
+            {/* Metrics */}
+            <div className="grid grid-cols-3 gap-4 pb-6 border-b border-border">
+              {project.metrics.map((m) => (
+                <div key={m.label}>
+                  <Counter
+                    value={m.value}
+                    className="block text-2xl font-medium tracking-tight text-[var(--brand)]"
+                  />
+                  <div className="mt-1 text-[10px] text-muted-foreground leading-snug">
+                    {m.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Meta row */}
+            <div className="mt-5 flex items-center justify-between text-xs">
+              <span className="font-mono text-muted-foreground">
+                {project.period} · {project.company}
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-mono text-foreground/70 group-hover:text-foreground transition-colors">
+                Case study
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function SmallCard({ project }: { project: Project }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group block h-full overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-foreground/30 hover:-translate-y-1"
+    >
+      <div className="relative h-40 overflow-hidden">
+        <ProjectCover slug={project.slug} className="absolute inset-0 transition-transform duration-700 group-hover:scale-105" />
+      </div>
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex items-center gap-2">
+          <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-widest rounded-full border border-border text-muted-foreground">
             {statusLabel[project.status]}
           </span>
+          <span className="font-mono text-[10px] text-muted-foreground">
+            {project.period}
+          </span>
         </div>
-
-        {/* Title */}
-        <h3
-          className={`font-medium tracking-tight leading-tight ${
-            featured ? "text-4xl md:text-6xl" : "text-2xl md:text-3xl"
-          }`}
-        >
-          {project.title}
-        </h3>
-
-        <p
-          className={`mt-2 text-muted-foreground ${
-            featured ? "text-lg md:text-xl" : "text-sm"
-          }`}
-        >
-          {project.subtitle}
-        </p>
-
-        {/* Tagline */}
-        <p
-          className={`text-foreground/80 leading-relaxed text-pretty ${
-            featured ? "mt-8 text-base md:text-lg max-w-xl" : "mt-6 text-sm"
-          }`}
-        >
+        <div>
+          <h3 className="text-2xl font-medium tracking-tight leading-tight">
+            {project.title}
+          </h3>
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+            {project.subtitle}
+          </p>
+        </div>
+        <p className="text-sm text-foreground/70 leading-relaxed line-clamp-2">
           {project.tagline}
         </p>
-
-        {/* Metrics */}
-        {featured && (
-          <div className="mt-10 grid grid-cols-3 gap-6 max-w-xl">
-            {project.metrics.map((m) => (
-              <div key={m.label}>
-                <div className="text-2xl md:text-3xl font-medium tracking-tight">
-                  {m.value}
-                </div>
-                <div className="mt-1 text-[11px] text-muted-foreground leading-snug">
-                  {m.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Tags */}
-        <div className="mt-6 flex flex-wrap items-center gap-2">
-          {project.tags.slice(0, featured ? 4 : 3).map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-0.5 text-[10px] font-mono rounded-md bg-secondary text-secondary-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Arrow */}
-        <div className="mt-8 flex items-center gap-2 text-sm font-mono text-muted-foreground group-hover:text-foreground transition-colors">
-          <span>Read case study</span>
-          <span className="transition-transform group-hover:translate-x-1">
+        <div className="mt-auto flex items-center justify-between pt-2">
+          <span className="font-mono text-[10px] text-muted-foreground">
+            {project.company}
+          </span>
+          <span className="text-lg text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all">
             →
           </span>
         </div>
-      </Link>
-    );
-  }
+      </div>
+    </Link>
+  );
 }

@@ -158,4 +158,50 @@
     background-size: 24px 24px;
     opacity: 0.03;
   }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .mask-fade-r {
+    mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  }
+  .mask-fade-lr {
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+  .glow-brand {
+    box-shadow:
+      0 0 0 1px oklch(0.72 0.19 155 / 0.2),
+      0 20px 40px -20px oklch(0.72 0.19 155 / 0.3);
+  }
+  .animate-marquee {
+    animation: marquee var(--duration, 40s) linear infinite;
+  }
+  .animate-blob {
+    animation: blob 12s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap, 2rem))); }
+}
+
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -50px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.9); }
+  75% { transform: translate(50px, 30px) scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }

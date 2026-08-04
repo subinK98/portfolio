@@ -13,13 +13,19 @@ const fadeUp = {
 export function About() {
   return (
     <section id="about" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <motion.div {...fadeUp} className="mb-10 flex items-baseline gap-4">
-        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          / 01
-        </span>
-        <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground">
-          About
-        </h2>
+      <motion.div {...fadeUp} className="mb-12 flex items-end justify-between gap-4">
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            / 01 · About
+          </span>
+          <h2 className="mt-3 text-3xl md:text-5xl font-medium tracking-tight leading-tight text-balance">
+            공공 SI에서
+            <br />
+            <span className="text-muted-foreground">
+              O2O 플랫폼까지.
+            </span>
+          </h2>
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-4">
@@ -27,23 +33,25 @@ export function About() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="md:col-span-4 rounded-2xl border border-border bg-card p-8 md:p-10"
+          className="md:col-span-4 rounded-2xl border border-border bg-card p-8 md:p-10 relative overflow-hidden"
         >
-          <h3 className="text-2xl md:text-3xl font-medium tracking-tight leading-snug text-balance">
-            사용자 문제를 관찰하고,
-            <br />
-            <span className="text-muted-foreground">
-              데이터로 근거를 만들어,
-            </span>
-            <br />
-            AI로 실행까지 이어냅니다.
-          </h3>
-          <p className="mt-6 text-muted-foreground leading-relaxed text-pretty">
-            공공 SI, 스타트업 서비스, O2O 플랫폼까지 다양한 도메인에서 기획을
-            경험했습니다. 특히 최근에는 Claude Code를 활용해 기획한 어드민을
-            직접 프론트엔드까지 구현하며, 개발 리소스가 부족한 환경에서 실행
-            속도를 3배 이상 끌어올렸습니다.
-          </p>
+          <div className="absolute top-6 right-6 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+            bio.md
+          </div>
+          <div className="space-y-4 text-base md:text-lg leading-relaxed text-foreground/85 text-pretty">
+            <p>
+              1년차 서비스 기획자입니다. 노사발전재단 <strong>5억 규모의 공공
+              SI</strong>에 주니어 단독으로 참여했고, 스타트업 헬스케어 앱의
+              IA를 재설계했으며, 지금은 세차 O2O 플랫폼 <strong>Care-X의 4개
+              서비스</strong>를 최소 팀에서 담당하고 있습니다.
+            </p>
+            <p>
+              최근에는 Claude Code로 어드민 프론트엔드까지 직접 구현하면서,{" "}
+              <strong>기획→개발 사이의 벽을 낮추는 방식</strong>을 실험하고
+              있습니다. 개발 리소스가 부족한 환경일수록 이 방식이 결정적인
+              차이를 만들었습니다.
+            </p>
+          </div>
         </motion.div>
 
         {/* Status */}
