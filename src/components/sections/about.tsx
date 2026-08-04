@@ -65,7 +65,7 @@ export function About() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />
             </span>
-            <span className="font-mono">Since 2025.08</span>
+            <span className="font-mono">Since 2026.03</span>
           </div>
         </motion.div>
 
@@ -105,9 +105,15 @@ export function About() {
           </div>
           <div className="space-y-3 text-sm">
             <div>
+              <div className="font-medium">에이프</div>
+              <div className="text-xs text-muted-foreground font-mono">
+                2026.03 – Present · 서비스 기획
+              </div>
+            </div>
+            <div>
               <div className="font-medium">소프트시그널</div>
               <div className="text-xs text-muted-foreground font-mono">
-                2025.03 – Present · 서비스 기획
+                2025.03 – 2025.08 · 서비스 기획
               </div>
             </div>
             <div>

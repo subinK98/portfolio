@@ -7,7 +7,7 @@ export const siteConfig = {
   email: "subin.k1229@gmail.com",
   github: "https://github.com/subinK98",
   location: "Seoul, South Korea",
-  currentRole: "소프트시그널 · 서비스 기획",
+  currentRole: "에이프 · 서비스 기획",
 } as const;
 
 export const navigation = [
