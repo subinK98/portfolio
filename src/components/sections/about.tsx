@@ -106,16 +106,24 @@ export function About() {
             Now Building With
           </div>
           <div className="flex flex-wrap gap-2">
-            {["Figma", "Claude Code", "Notion", "Nuxt", "Next.js", "Vercel"].map(
-              (tag) => (
-                <span
-                  key={tag}
-                  className="px-2.5 py-1 text-xs font-mono rounded-md bg-secondary text-secondary-foreground"
-                >
-                  {tag}
-                </span>
-              ),
-            )}
+            {[
+              "Figma",
+              "Notion",
+              "Confluence",
+              "MS Office",
+              "Slack",
+              "Claude Code",
+              "Git",
+              "GitHub",
+              "Vercel",
+            ].map((tag) => (
+              <span
+                key={tag}
+                className="px-2.5 py-1 text-xs font-mono rounded-md bg-secondary text-secondary-foreground"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </motion.div>
       </div>

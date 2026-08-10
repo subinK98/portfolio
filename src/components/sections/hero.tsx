@@ -97,8 +97,9 @@ export function Hero() {
             <span className="text-foreground font-medium">
               {siteConfig.nameKo}
             </span>
-            {" · "}Claude Code로 기획한 서비스를 프론트엔드까지 직접
-            구현하는 1년차 서비스 기획자.
+            <br />
+            Claude Code로 기획한 서비스를 프론트엔드까지 직접 구현하는 1년차
+            서비스 기획자.
           </motion.p>
 
           {/* CTAs */}
