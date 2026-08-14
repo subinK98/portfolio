@@ -13,6 +13,7 @@ import {
   type MatrixRow,
 } from "@/components/diagrams/comparison-matrix";
 import { BabyMonitorSystemFlow } from "@/components/diagrams/system-flow";
+import { ImageFigure } from "@/components/project/screenshots";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "baby-monitor";
@@ -109,6 +110,14 @@ export default function Page() {
           </p>
 
           <BabyMonitorSystemFlow />
+
+          <ImageFigure
+            src="/images/projects/baby-monitor/hardware-and-ui.png"
+            alt="실제 구현된 하드웨어와 웹 UI"
+            label="실제 구현 · 발목 밴드(라즈베리파이) · 자동 회전 모빌 · 실시간 웹 UI"
+            aspect="16/9"
+            contain
+          />
         </Section>
 
         <Section id="role" number="04" title="My Role — 기획 + 개발 + 팀 리딩">

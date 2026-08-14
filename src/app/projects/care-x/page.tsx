@@ -18,6 +18,10 @@ import {
 import { TeamDiagram } from "@/components/diagrams/team-diagram";
 import { RoleDonut } from "@/components/diagrams/role-donut";
 import { GanttCompare } from "@/components/diagrams/gantt-compare";
+import {
+  PhoneShotGrid,
+  BrowserShot,
+} from "@/components/project/screenshots";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "care-x";
@@ -62,6 +66,32 @@ export default function CareXPage() {
               { value: "4", label: "서비스 통합", sub: "앱·키오스크·점주·관리자" },
               { value: "33%", label: "개발 리드타임 단축", sub: "3개월 → 2개월" },
               { value: "90%", label: "QA 이슈 해결률", sub: "총 103건 중" },
+            ]}
+          />
+
+          <PhoneShotGrid
+            cols={4}
+            items={[
+              {
+                src: "/images/projects/care-x/app-02-home.png",
+                alt: "Care-X 앱 홈 화면",
+                label: "Home · 주변 세차장 지도",
+              },
+              {
+                src: "/images/projects/care-x/app-03-qr-scan.png",
+                alt: "QR 스캔 화면",
+                label: "QR Scan · 매장 인식",
+              },
+              {
+                src: "/images/projects/care-x/app-04-package.png",
+                alt: "패키지 선택",
+                label: "Package · 상품 선택",
+              },
+              {
+                src: "/images/projects/care-x/app-06-point-payment.png",
+                alt: "포인트 결제",
+                label: "Payment · 포인트 결제",
+              },
             ]}
           />
         </Section>
@@ -129,6 +159,20 @@ export default function CareXPage() {
               { label: "프론트엔드 (어드민 2종)", value: 30, color: "oklch(0.72 0.19 155 / 0.45)" },
               { label: "QA · 테스트", value: 10, color: "oklch(0.72 0.19 155 / 0.25)" },
             ]}
+          />
+
+          <BrowserShot
+            src="/images/projects/care-x/admin-store-dashboard.png"
+            alt="점주 콘솔 사이드바 - 매출·셀프세차·매장설정 메뉴"
+            url="store-admin.care-x.app"
+            label="점주 콘솔 · 매출 · 셀프세차 · 매장설정 3개 카테고리 (Nuxt · Vue)"
+          />
+
+          <BrowserShot
+            src="/images/projects/care-x/admin-super-login.png"
+            alt="Care-X 관리자 콘솔 로그인 화면"
+            url="admin.care-x.app"
+            label="관리자 콘솔 · 가맹점 · 매장 · 결제 통합 관리 (Nuxt · Vue)"
           />
         </Section>
 

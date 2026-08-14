@@ -11,6 +11,7 @@ import {
 } from "@/components/project/case-study";
 import { TeamDiagram } from "@/components/diagrams/team-diagram";
 import { ChannelFlowCompare } from "@/components/diagrams/channel-flow";
+import { PhoneShotGrid } from "@/components/project/screenshots";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "middle-aged-employment";
@@ -145,6 +146,37 @@ export default function Page() {
               { value: "10 → 1", label: "화면기획서 리뷰 이슈", sub: "프로젝트 후반" },
               { value: "1개", label: "통합 소통 채널", sub: "이전: 4-5개 분산" },
               { value: "4종", label: "표준 산출물 템플릿", sub: "WBS·회의록 등" },
+            ]}
+          />
+
+          <p className="text-sm text-muted-foreground">
+            아래는 신규 설계한 모바일 화면 중 일부입니다. 중장년 사용자를 위해
+            큰 터치 영역, 명확한 CTA, 단순화된 검색 조건을 원칙으로 삼았습니다.
+          </p>
+
+          <PhoneShotGrid
+            cols={4}
+            items={[
+              {
+                src: "/images/projects/middle-aged-employment/mobile-01-career-list.png",
+                alt: "생애경력설계 신청현황 리스트",
+                label: "생애경력설계 · 신청현황",
+              },
+              {
+                src: "/images/projects/middle-aged-employment/mobile-02-career-detail.png",
+                alt: "생애경력설계 상세",
+                label: "생애경력설계 · 상세",
+              },
+              {
+                src: "/images/projects/middle-aged-employment/mobile-03-service-list.png",
+                alt: "전직지원서비스 신청현황",
+                label: "전직지원 · 신청현황",
+              },
+              {
+                src: "/images/projects/middle-aged-employment/mobile-04-education-list.png",
+                alt: "전직지원 교육신청현황",
+                label: "전직지원 · 교육신청",
+              },
             ]}
           />
         </Section>

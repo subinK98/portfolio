@@ -10,6 +10,7 @@ import {
   NextProject,
 } from "@/components/project/case-study";
 import { IATree } from "@/components/diagrams/ia-tree";
+import { ImageFigure } from "@/components/project/screenshots";
 import { allProjects, getProject } from "@/lib/projects";
 
 const SLUG = "petcarelab";
@@ -146,6 +147,14 @@ export default function Page() {
             추가로 <strong>Figma 협업 프로세스를 팀에 도입</strong>해 PPT 기반
             화면 공유의 버전 혼선을 해소하고 피드백 속도를 개선했습니다.
           </p>
+
+          <ImageFigure
+            src="/images/projects/petcarelab/ui-screens.png"
+            alt="PetcareLab 5개 핵심 화면 - 홈, 건강일기, 소변검사, 검사 히스토리, 마이페이지"
+            label="리뉴얼된 UI · 홈에 건강 요약 강조, 소변검사 히스토리를 그래프로 시각화"
+            aspect="16/9"
+            contain
+          />
         </Section>
 
         <Section id="learnings" number="05" title="Learnings">
